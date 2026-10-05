@@ -1,0 +1,32 @@
+# ===== 秘钥与配置（绝不入库）=====
+.env
+
+# ===== 运行产物与实验区 =====
+logs/
+playground/
+memory.txt
+greet.py
+diary.txt
+diary1.txt
+__pycache__/
+*.pyc
+
+# ===== 第三方源码仓库（拆解学习用，295MB，不入库）=====
+analysis/opensource/
+
+# ===== 教学档案（私人，不入库）=====
+TEACHING_CONSTITUTION.md
+TEACHING_STATE.md
+STUDENT_PROFILE.md
+SESSION_LOG.md
+LEARNING_NOTES.md
+GLOSSARY.md
+ROADMAP.md
+AGENT.md
+AGENT_INTERVIEW.md
+
+# ===== 教学网页（待审阅后决定是否发布）=====
+analysis/
+
+# ===== 本地工具配置 =====
+.zcodeignore
