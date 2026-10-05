@@ -31,3 +31,6 @@ analysis/
 # ===== 本地工具配置 =====
 .zcodeignore
 .kilo/
+
+# ===== 交棒与讲义（私人，不入库）=====
+Next Agent/
