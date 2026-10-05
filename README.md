@@ -6,11 +6,15 @@
 
 *A from-scratch LLM Agent in 26 progressive modules — no agent framework, only the official OpenAI client.*
 
+[简体中文](README.md) | [English](README_EN.md)
+
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![CI](https://github.com/JonathanQUANLEE/miniagent/actions/workflows/tests.yml/badge.svg)
 ![Tests](https://img.shields.io/badge/tests-15%20passed-brightgreen)
 ![Framework](https://img.shields.io/badge/agent%20framework-zero-orange)
+
+<img src="docs/assets/web-ui.png" alt="Mini Agent Web 聊天界面（FastAPI + SSE 流式）" width="700">
 
 </div>
 
@@ -102,6 +106,10 @@ data: {"type": "tool", "name": "run_command", "args": {"command": "dir"}, "resul
 data: {"type": "done", "answer": "……", "steps": 3}
 ```
 
+<p align="center">
+  <img src="docs/assets/api-docs.png" alt="Swagger 自动生成的 API 文档" width="700">
+</p>
+
 ## 📚 模块演进路径（26 步）
 
 <details>
@@ -186,6 +194,11 @@ pytest tests/ -q        # 15 个测试，全部离线，零 API 消耗
 
 覆盖：RAG 切片与检索排序、向量稳定性（跨运行一致）、权限白名单与注入拦截、
 MCP 协议分发（握手/菜单/调用/未知工具优雅拒绝）。
+
+## 📖 项目文档
+
+- [架构文档 ARCHITECTURE](docs/ARCHITECTURE.md) —— 分层架构、请求生命周期、每个设计决策的"为什么"与权衡
+- [更新日志](CHANGELOG.md) · [贡献指南](CONTRIBUTING.md) · [安全政策](SECURITY.md) · [English README](README_EN.md)
 
 ## ❓ 设计决策 FAQ
 

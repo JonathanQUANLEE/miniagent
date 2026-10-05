@@ -150,9 +150,15 @@ def sse_chat(question, max_steps=MAX_STEPS):
     yield sse({"type": "start"})
 
     for step in range(1, max_steps + 1):
-        stream = llm.chat.completions.create(
-            model=MODEL, messages=messages, tools=TOOLS_SCHEMA, stream=True,
-        )
+        try:
+            stream = llm.chat.completions.create(
+                model=MODEL, messages=messages, tools=TOOLS_SCHEMA, stream=True,
+            )
+        except Exception as e:
+            # 失败工程（step14 血统）：把错误变成一条礼貌的 SSE 事件，而不是让流悄悄断掉
+            log("错误", f"{type(e).__name__}: {str(e)[:120]}")
+            yield sse({"type": "error", "message": f"调用模型失败：{e}"})
+            return
         content_parts = []
         tc_slots = {}                        # index → 半截工单聚合槽
         for chunk in stream:
@@ -205,7 +211,12 @@ def run_agent(question, max_steps=MAX_STEPS):
     ]
     steps_log = []
     for step in range(1, max_steps + 1):
-        r = llm.chat.completions.create(model=MODEL, messages=messages, tools=TOOLS_SCHEMA)
+        try:
+            r = llm.chat.completions.create(model=MODEL, messages=messages, tools=TOOLS_SCHEMA)
+        except Exception as e:
+            log("错误", f"{type(e).__name__}: {str(e)[:120]}")
+            return {"error": f"调用模型失败：{e}", "steps": steps_log,
+                    "rounds": step, "elapsed": round(time.time() - started, 1)}
         msg = r.choices[0].message
         if not msg.tool_calls:
             return {"answer": msg.content, "steps": steps_log,
@@ -287,6 +298,7 @@ function send(){
       const t = bubble('tool');
       t.textContent = '🔧 ' + m.name + ' ' + JSON.stringify(m.args) + '\\n→ ' + m.result;
     }
+    else if(m.type === 'error'){ bot.textContent += '\\n[出错了] ' + m.message; es.close(); }
     else if(m.type === 'done'){ es.close(); }
   };
   es.onerror = () => { es.close(); };
