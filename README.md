@@ -8,6 +8,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![CI](https://github.com/JonathanQUANLEE/miniagent/actions/workflows/tests.yml/badge.svg)
 ![Tests](https://img.shields.io/badge/tests-15%20passed-brightgreen)
 ![Framework](https://img.shields.io/badge/agent%20framework-zero-orange)
 
