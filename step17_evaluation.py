@@ -194,22 +194,24 @@ def run_agent(question):                     # Agent 从此是一个可调用的
 passed = 0                                   # 及格计数器
 for t in TASKS:                              # 挨个考
     print(f"\n===== 考核：{t['name']} =====")
-    answer = run_agent(t["q"])               # 考！
-    answer_text = str(answer)                # 统一变文字条
-    if t["check"] in answer_text:            # ★ 验收点在答案里吗
-        print(f"PASS：找到 '{t['check']}'")
-        passed += 1
-    elif "check_file" in t:                  # 答案里没有 → 查文件
-        f = open(t["check_file"], encoding="utf-8")
-        content = f.read()
-        f.close()
-        if t["check"] in content:
-            print(f"PASS：文件里找到 '{t['check']}'")
+    try:                                     # ★ 新增：单题崩溃只记 FAIL，不再拖死整场考试
+        answer = run_agent(t["q"])           # 考！
+        answer_text = str(answer)            # 统一变文字条
+        if t["check"] in answer_text:        # ★ 验收点在答案里吗
+            print(f"PASS：找到 '{t['check']}'")
             passed += 1
+        elif "check_file" in t:              # 答案里没有 → 查文件
+            with open(t["check_file"], encoding="utf-8") as f:   # ★ 顺手换成 with 自动关门
+                content = f.read()
+            if t["check"] in content:
+                print(f"PASS：文件里找到 '{t['check']}'")
+                passed += 1
+            else:
+                print("FAIL：文件里也没有")
         else:
-            print("FAIL：文件里也没有")
-    else:
-        print("FAIL：验收点缺失")
+            print("FAIL：验收点缺失")
+    except Exception as e:                   # ★ 一题炸 = 该题 FAIL，考试继续
+        print(f"FAIL：本题执行出错 {type(e).__name__}: {e}")
 
 print(f"\n===== 评测报告 =====")
 print(f"通过 {passed} / {len(TASKS)}，成功率 {round(passed/len(TASKS)*100)}%")
