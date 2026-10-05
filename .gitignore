@@ -30,3 +30,4 @@ analysis/
 
 # ===== 本地工具配置 =====
 .zcodeignore
+.kilo/

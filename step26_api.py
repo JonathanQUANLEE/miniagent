@@ -233,7 +233,7 @@ def run_agent(question, max_steps=MAX_STEPS):
 
 
 # ---------- FastAPI 应用 ----------
-app = FastAPI(title="Mini Agent API", description="零框架手搓 Agent 的产品化外壳")
+app = FastAPI(title="Mini Agent API", description="零框架 LLM Agent 的产品化服务层")
 
 
 class ChatIn(BaseModel):
@@ -273,7 +273,7 @@ CHAT_HTML = """<!DOCTYPE html>
   button{padding:10px 18px;border-radius:8px;border:0;background:#38bdf8;
          color:#0f172a;font-weight:bold;cursor:pointer}
 </style></head><body>
-<h1>Mini Agent <span>· 零框架手搓 · FastAPI + SSE</span></h1>
+<h1>Mini Agent <span>· 零框架实现 · FastAPI + SSE</span></h1>
 <div id="log"></div>
 <form onsubmit="send();return false">
   <input id="q" placeholder="让 Agent 干点活，比如：在 playground 里写一个 hi.py 并运行它" autofocus>

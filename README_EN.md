@@ -4,7 +4,7 @@
 
 **A from-scratch LLM Agent in 26 progressive modules — no agent framework, only the official OpenAI client.**
 
-*零框架从零手搓的 LLM Agent —— 从第一次 LLM 调用到完整产品化 Runtime 的 26 个渐进模块。*
+*零框架 · 从零实现的 LLM Agent —— 26 个可独立运行的渐进模块，覆盖从第一次 LLM 调用到流式产品化服务。*
 
 [简体中文](README.md) | English
 
@@ -23,9 +23,17 @@
 ## Why from scratch?
 
 Frameworks (LangChain, LlamaIndex, …) hide the decisions: **users of a framework know how
-to call it; people who built one from scratch know why.** This project hand-builds every
+to call it; people who build one from scratch know why.** This project implements every
 part of an agent — the loop, tools, memory, compaction, retries, multi-agent, permissions,
 registry — then adds the production layer (RAG / MCP / streaming API) on top.
+
+**What sets it apart from typical "framework wrapper" projects:**
+
+- **Progressive & reproducible** — 26 standalone, individually runnable modules, layering from hello-LLM to a streaming service: a reviewable engineering path, not a notebook toy
+- **Evaluation-first** — fixed test set + 15 offline unit tests + CI; every change is scored before merge
+- **Protocol, both ends** — implements an MCP server *and* client (JSON-RPC 2.0 over stdio), not just a consumer
+- **Graceful degradation everywhere** — offline embedding fallback, exponential backoff, SSE `error` events
+- **Decisions backed by numbers** — 98.3% compaction, 29% parallel speedup; see [ARCHITECTURE](docs/ARCHITECTURE.md)
 
 ```text
 Mini Agent Runtime

@@ -2,7 +2,7 @@
 
 # Mini Agent
 
-**零框架从零手搓的 LLM Agent —— 从第一次 LLM 调用到完整产品化 Runtime 的 26 个渐进模块**
+**零框架 · 从零实现的 LLM Agent —— 26 个可独立运行的渐进模块，覆盖从第一次 LLM 调用到流式产品化服务**
 
 *A from-scratch LLM Agent in 26 progressive modules — no agent framework, only the official OpenAI client.*
 
@@ -20,10 +20,10 @@
 
 ---
 
-## 为什么从零手搓
+## 为什么从零实现
 
-框架（LangChain / LlamaIndex…）把决策藏了起来：**用它们的人知道怎么调，手写过的人知道为什么。**
-本项目从 `hello LLM` 开始，把 Agent 的每一个零件亲手造一遍——循环、工具、记忆、压缩、重试、
+框架（LangChain / LlamaIndex…）把决策藏了起来：**用它们的人知道怎么调，从零实现的人知道为什么。**
+本项目从 `hello LLM` 开始，逐层实现 Agent 的每一个零件——循环、工具、记忆、压缩、重试、
 多智能体、权限、注册表——最后补上产品化三件套（RAG / MCP / 流式 API），总装成一个能部署的完整 Agent。
 
 ```text
@@ -40,6 +40,14 @@ Mini Agent Runtime
 ├── 协议层：MCP 客户端 + 服务端，JSON-RPC 2.0 over stdio（step25 / mini_mcp_server）
 └── 产品层：FastAPI + SSE 流式 + Web 聊天界面 + Docker（step26）
 ```
+
+**与常见"框架套壳"项目的不同之处：**
+
+- **渐进式可复现路径** —— 26 个模块各自独立运行、独立验证，从 hello-LLM 逐层叠加到产品化服务：不是 Notebook 玩具合集，而是一条可 review、可回归的工程路径
+- **评测先行** —— 固定考卷 + 15 个离线单元测试 + CI，任何改动先跑分再合并
+- **协议双端实现** —— 不只调用 MCP，而是亲手实现 MCP 服务端与客户端（JSON-RPC 2.0 over stdio）
+- **优雅降级贯穿全局** —— Embedding 离线兜底、指数退避重试、SSE `error` 事件礼貌失败
+- **设计决策用数字说话** —— 压缩 98.3%、并行提速 29%、退避 2→4s，详见[架构文档](docs/ARCHITECTURE.md)
 
 ## ✨ 特性总览
 
@@ -213,7 +221,7 @@ MCP 协议分发（握手/菜单/调用/未知工具优雅拒绝）。
 
 ## 🗺️ Roadmap
 
-- [ ] 用 LangGraph 复写核心 Loop，与手搓版逐模块对照
+- [ ] 用 LangGraph 复写核心 Loop，与从零实现版逐模块对照
 - [ ] 向量库升级：Chroma / Milvus 接入
 - [ ] AgentLab：考卷数据集 + 运行器 + 判分器 + 报告器的完整评测平台
 - [ ] 多模态工具（截图理解）
